@@ -1,11 +1,17 @@
 "use client";
 
 import { createClient } from "@/lib/supabase/client";
+import { Session } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 
-export default function AuthButton() {
+export default function AuthButtonClient({
+  session,
+}: {
+  session: Session | null;
+}) {
   const supabase = createClient();
   const router = useRouter();
+
   async function handleSingIn() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
@@ -14,6 +20,7 @@ export default function AuthButton() {
       },
     });
   }
+
   async function signOut() {
     const { error } = await supabase.auth.signOut();
     if (error) {
@@ -25,8 +32,11 @@ export default function AuthButton() {
   }
   return (
     <>
-      <button onClick={handleSingIn}>login</button>
-      <button onClick={signOut}>logout</button>
+      {!session ? (
+        <button onClick={handleSingIn}>login</button>
+      ) : (
+        <button onClick={signOut}>logout</button>
+      )}
     </>
   );
 }
