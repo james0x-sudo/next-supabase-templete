@@ -1,9 +1,11 @@
 "use client";
 
 import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 
 export default function AuthButton() {
   const supabase = createClient();
+  const router = useRouter();
   async function handleSingIn() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
@@ -18,6 +20,7 @@ export default function AuthButton() {
       console.error("logout error:", error);
     } else {
       console.log("logout success");
+      router.refresh();
     }
   }
   return (

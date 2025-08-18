@@ -8,7 +8,7 @@ export default async function Instruments() {
   return (
     <>
       <AuthButton />
-      <pre>{JSON.stringify(instruments, null, 2)}</pre>;
+      <pre>{JSON.stringify(instruments, null, 2)}</pre>
     </>
   );
 }
