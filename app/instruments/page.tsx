@@ -3,7 +3,9 @@ import AuthButtonServer from "./auth-button-server";
 
 export default async function Instruments() {
   const supabase = await createClient();
-  const { data: instruments } = await supabase.from("tweets").select();
+  const { data: instruments } = await supabase
+    .from("tweets")
+    .select("*, profiles(*)");
 
   return (
     <>
